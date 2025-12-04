@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Resume - {{ candidate.first_name }} {{ candidate.last_name }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mx-auto" style="max-width: 700px;">
+  <div class="card-body">
+    <h3 class="mb-3">Resume - {{ candidate.first_name }} {{ candidate.last_name }}</h3>
+
+    {% if candidate.resume %}
+      <pre>{{ candidate.resume }}</pre>
+    {% else %}
+      <p class="text-muted">No resume provided.</p>
+    {% endif %}
+
+    <a href="{% url 'candidates' %}" class="btn btn-secondary mt-3">Back to Candidates</a>
+  </div>
+</div>
+{% endblock %}

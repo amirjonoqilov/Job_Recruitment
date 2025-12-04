@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Add Company{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mx-auto" style="max-width: 500px;">
+  <div class="card-body">
+    <h3 class="mb-3">Add New Company</h3>
+
+    <form method="POST">
+      {% csrf_token %}
+      {% include 'partials/_form_fields.html' %}
+      
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'companies' %}" class="btn btn-secondary">Back</a>
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+    </form>
+    
+  </div>
+</div>
+{% endblock %}

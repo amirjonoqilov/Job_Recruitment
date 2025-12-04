@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Delete Interview{% endblock %}
+
+{% block content %}
+<h1 class="h4">Delete Interview</h1>
+<div class="alert alert-warning">
+  Are you sure you want to delete interview with
+  <strong>{{ object.candidate }}</strong>
+  for <strong>{{ object.job }}</strong>
+  at {{ object.interview_time }}?
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger">Yes, delete</button>
+  <a href="{% url 'interviews' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

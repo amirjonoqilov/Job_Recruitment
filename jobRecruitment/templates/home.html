@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Job Recruitment System{% endblock %}
+
+{% block content %}
+
+<div class="py-5">
+    
+    <div class="row mb-5 pb-4 border-bottom">
+        <div class="col-md-8">
+            <h1 class="h2 fw-normal mb-3">
+                Welcome, <span class="fw-bold">{{ user.username }}</span>
+            </h1>
+            {% if user.groups.all %}
+                <span class="badge bg-light text-dark">{{ user.groups.all.0.name }}</span>
+            {% endif %}
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+   
+    <div class="row g-4">
+       
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'companies' %}" class="text-decoration-none">
+                <div class="card h-100 card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase fw-bold small">Companies</h5>
+                        <p class="display-5 fw-normal mb-0">{{ company_count }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <span class="text-muted small">View Details →</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'candidates' %}" class="text-decoration-none">
+                <div class="card h-100 card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase fw-bold small">Candidates</h5>
+                        <p class="display-5 fw-normal mb-0">{{ candidate_count }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <span class="text-muted small">View Details →</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+       
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'job_postings' %}" class="text-decoration-none">
+                <div class="card h-100 card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase fw-bold small">Job Postings</h5>
+                        <p class="display-5 fw-normal mb-0">{{ job_posting_count }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <span class="text-muted small">View Details →</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        
+        <div class="col-md-6 col-lg-3">
+            <a href="{% url 'interviews' %}" class="text-decoration-none">
+                <div class="card h-100 card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase fw-bold small">Interviews</h5>
+                        <p class="display-5 fw-normal mb-0">{{ interview_count }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <span class="text-muted small">View Details →</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
