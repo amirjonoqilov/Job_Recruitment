@@ -19,12 +19,12 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-@login_required
+
 def companies_list(request):
     companies = Company.objects.all()
     return render(request, 'company/companies.html', {'companies': companies})
 
-@login_required
+
 def candidates_list(request):
     user = request.user
 
@@ -37,7 +37,7 @@ def candidates_list(request):
 
     return render(request, 'candidate/candidates.html', {'candidates': candidates})
 
-@login_required
+
 def job_postings_list(request):
     user = request.user
 
@@ -50,13 +50,13 @@ def job_postings_list(request):
 
     return render(request, 'job_posting/job_postings.html', {'job_postings': job_postings})
 
-@login_required
+
 def view_candidate_resume(request, id):
     candidate = get_object_or_404(Candidate, id=id)
     return render(request, 'candidate/view_resume.html', {'candidate': candidate})
 
 # CREATE CANDIDATE
-@login_required
+
 @permission_required('jobRecruitment.add_candidate', raise_exception=True)
 def create_candidate(request):
     if request.method == "POST":
@@ -70,7 +70,7 @@ def create_candidate(request):
     return render(request, 'candidate/create_candidate.html', {'form': form})
 
 # UPDATE CANDIDATE
-@login_required
+
 @permission_required('jobRecruitment.change_candidate', raise_exception=True)
 def update_candidate(request, id):
     candidate = get_object_or_404(Candidate, id=id)
@@ -82,7 +82,7 @@ def update_candidate(request, id):
     return render(request, 'candidate/update_candidate.html', {'form': form})
 
 # DELETE CANDIDATE
-@login_required
+
 @permission_required('jobRecruitment.delete_candidate', raise_exception=True)
 def delete_candidate(request, id):
     candidate = get_object_or_404(Candidate, id=id)
@@ -93,7 +93,7 @@ def delete_candidate(request, id):
     return render(request, 'candidate/delete_candidate.html', {'candidate': candidate})
 
 # CREATE COMPANY
-@login_required
+
 @permission_required('jobRecruitment.add_company', raise_exception=True)
 def create_company(request):
     if request.method == "POST":
@@ -107,7 +107,7 @@ def create_company(request):
     return render(request, 'company/create_company.html', {'form': form})
 
 # UPDATE COMPANY
-@login_required
+
 @permission_required('jobRecruitment.change_company', raise_exception=True)
 def update_company(request, id):
     company = get_object_or_404(Company, id=id)
@@ -119,7 +119,7 @@ def update_company(request, id):
     return render(request, 'company/update_company.html', {'form': form})
 
 # DELETE COMPANY
-@login_required
+
 @permission_required('jobRecruitment.delete_company', raise_exception=True)
 def delete_company(request, id):
     company = get_object_or_404(Company, id=id)
@@ -130,7 +130,7 @@ def delete_company(request, id):
     return render(request, 'company/delete_company.html', {'company': company})
 
 # CREATE JOB POSTING
-@login_required
+
 @permission_required('jobRecruitment.add_jobposting', raise_exception=True)
 def create_job_posting(request):
     if request.method == "POST":
@@ -144,7 +144,7 @@ def create_job_posting(request):
     return render(request, 'job_posting/create_job_posting.html', {'form': form})
 
 # UPDATE JOB POSTING
-@login_required
+
 @permission_required('jobRecruitment.change_jobposting', raise_exception=True)
 def update_job_posting(request, id):
     job_posting = get_object_or_404(JobPosting, id=id)
@@ -156,7 +156,7 @@ def update_job_posting(request, id):
     return render(request, 'job_posting/update_job_posting.html', {'form': form})
 
 # DELETE JOB POSTING
-@login_required
+
 @permission_required('jobRecruitment.delete_jobposting', raise_exception=True)
 def delete_job_posting(request, id):
     job_posting = get_object_or_404(JobPosting, id=id)
@@ -167,7 +167,7 @@ def delete_job_posting(request, id):
     return render(request, 'job_posting/delete_job_posting.html', {'job_posting': job_posting})
 
 
-class InterviewListView(PermissionRequiredMixin, ListView):
+class InterviewListView(ListView):
     permission_required = 'jobRecruitment.view_interview'
     model = Interview
     template_name = 'interview/interviews.html'
@@ -176,7 +176,7 @@ class InterviewListView(PermissionRequiredMixin, ListView):
 
 from django.utils import timezone
 
-class InterviewCreateView(PermissionRequiredMixin, CreateView):
+class InterviewCreateView(CreateView):
     permission_required = 'jobRecruitment.add_interview'
     model = Interview
     form_class = InterviewForm
@@ -229,7 +229,7 @@ class InterviewCreateView(PermissionRequiredMixin, CreateView):
         
         return super().form_valid(form)
 
-class InterviewUpdateView(PermissionRequiredMixin, UpdateView):
+class InterviewUpdateView(UpdateView):
     permission_required = 'jobRecruitment.change_interview'
     model = Interview
     form_class = InterviewForm
@@ -237,7 +237,7 @@ class InterviewUpdateView(PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('interviews')
 
 
-class InterviewDeleteView(PermissionRequiredMixin, DeleteView):
+class InterviewDeleteView(DeleteView):
     permission_required = 'jobRecruitment.delete_interview'
     model = Interview
     template_name = 'interview/delete_interview.html'
@@ -249,8 +249,7 @@ def custom_permission_denied_view(request, exception=None):
 
 # INTERVIEWS LIST
 # INTERVIEWS LIST
-@login_required
-@permission_required('jobRecruitment.view_interview', raise_exception=True)
+
 def interviews_list(request):
     user = request.user
 
@@ -284,7 +283,7 @@ def interviews_list(request):
 
 
 
-@permission_required('jobRecruitment.add_interview', raise_exception=True)
+
 def create_interview(request):
     if request.method == 'POST':
         form = InterviewForm(request.POST)
