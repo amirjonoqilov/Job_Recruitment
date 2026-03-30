@@ -57,7 +57,6 @@ def view_candidate_resume(request, id):
 
 # CREATE CANDIDATE
 
-@permission_required('jobRecruitment.add_candidate', raise_exception=True)
 def create_candidate(request):
     if request.method == "POST":
         form = CandidateForm(request.POST)
@@ -71,7 +70,7 @@ def create_candidate(request):
 
 # UPDATE CANDIDATE
 
-@permission_required('jobRecruitment.change_candidate', raise_exception=True)
+
 def update_candidate(request, id):
     candidate = get_object_or_404(Candidate, id=id)
     form = CandidateForm(request.POST or None, instance=candidate)
@@ -83,7 +82,7 @@ def update_candidate(request, id):
 
 # DELETE CANDIDATE
 
-@permission_required('jobRecruitment.delete_candidate', raise_exception=True)
+
 def delete_candidate(request, id):
     candidate = get_object_or_404(Candidate, id=id)
     if request.method == "POST":
@@ -94,7 +93,7 @@ def delete_candidate(request, id):
 
 # CREATE COMPANY
 
-@permission_required('jobRecruitment.add_company', raise_exception=True)
+
 def create_company(request):
     if request.method == "POST":
         form = CompanyForm(request.POST)
@@ -108,7 +107,7 @@ def create_company(request):
 
 # UPDATE COMPANY
 
-@permission_required('jobRecruitment.change_company', raise_exception=True)
+
 def update_company(request, id):
     company = get_object_or_404(Company, id=id)
     form = CompanyForm(request.POST or None, instance=company)
@@ -120,7 +119,6 @@ def update_company(request, id):
 
 # DELETE COMPANY
 
-@permission_required('jobRecruitment.delete_company', raise_exception=True)
 def delete_company(request, id):
     company = get_object_or_404(Company, id=id)
     if request.method == "POST":
@@ -131,7 +129,6 @@ def delete_company(request, id):
 
 # CREATE JOB POSTING
 
-@permission_required('jobRecruitment.add_jobposting', raise_exception=True)
 def create_job_posting(request):
     if request.method == "POST":
         form = JobPostingForm(request.POST)
@@ -145,7 +142,6 @@ def create_job_posting(request):
 
 # UPDATE JOB POSTING
 
-@permission_required('jobRecruitment.change_jobposting', raise_exception=True)
 def update_job_posting(request, id):
     job_posting = get_object_or_404(JobPosting, id=id)
     form = JobPostingForm(request.POST or None, instance=job_posting)
@@ -157,7 +153,6 @@ def update_job_posting(request, id):
 
 # DELETE JOB POSTING
 
-@permission_required('jobRecruitment.delete_jobposting', raise_exception=True)
 def delete_job_posting(request, id):
     job_posting = get_object_or_404(JobPosting, id=id)
     if request.method == "POST":
