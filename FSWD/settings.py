@@ -86,10 +86,13 @@ WSGI_APPLICATION = 'FSWD.wsgi.application'
 
 import dj_database_url
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set. Please link a PostgreSQL database in Render.")
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.getenv("DATABASE_URL"),
+        DATABASE_URL,
         conn_max_age=600,
         ssl_require=True,
     )
