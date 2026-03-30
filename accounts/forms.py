@@ -28,7 +28,7 @@ class CustomUserCreationForm(BaseStyledModelForm, UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2', 'role']
+        fields = ['username', 'email', 'password1', 'password2', 'role']
         help_texts = {'username': None}
 
     def __init__(self, *args, **kwargs):

@@ -87,16 +87,22 @@ WSGI_APPLICATION = 'FSWD.wsgi.application'
 import dj_database_url
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set. Please link a PostgreSQL database in Render.")
-
-DATABASES = {
-    'default': dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
+if not DATABASE_URL or not DATABASE_URL.startswith(('postgres', 'postgresql', 'mysql', 'sqlite')):
+    # Fallback to SQLite for build/deploy if DATABASE_URL is invalid
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
