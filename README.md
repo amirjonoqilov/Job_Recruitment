@@ -17,6 +17,8 @@ A robust web-based Job Recruitment Platform built with Django, designed to strea
 -   [Acknowledgments](#acknowledgments)
 
 ---
+##Project URL
+https://job-recruitment-1-30ps.onrender.com
 
 ## Project Title & Description
 
