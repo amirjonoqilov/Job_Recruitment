@@ -20,49 +20,37 @@ def home(request):
 
 
 @login_required
-@permission_required('jobRecruitment.view_company', raise_exception=True)
 def companies_list(request):
     companies = Company.objects.all()
     return render(request, 'company/companies.html', {'companies': companies})
 
 @login_required
-@permission_required('jobRecruitment.view_candidate', raise_exception=True)
 def candidates_list(request):
     user = request.user
 
-    # Check if user is a Candidate
-    if user.groups.filter(name__iexact='Candidates').exists():
-        try:
-            candidate_profile = Candidate.objects.get(user=user)
-            candidates = Candidate.objects.filter(id=candidate_profile.id)
-        except Candidate.DoesNotExist:
-            candidates = Candidate.objects.none()
+    # Check if user has a candidate profile
+    if hasattr(user, 'candidate_profile'):
+        candidates = Candidate.objects.filter(user=user)
     else:   
-        # All other users (Company, Admin) see all candidates
+        # Admin or other users see all candidates
         candidates = Candidate.objects.all()
 
     return render(request, 'candidate/candidates.html', {'candidates': candidates})
 
 @login_required
-@permission_required('jobRecruitment.view_jobposting', raise_exception=True)
 def job_postings_list(request):
     user = request.user
 
-    # Check if user is a Company
-    if user.groups.filter(name__iexact='Companies').exists():
-        try:
-            company_profile = Company.objects.get(user=user)
-            job_postings = JobPosting.objects.filter(company=company_profile).order_by('-posted_date')
-        except Company.DoesNotExist:
-            job_postings = JobPosting.objects.none()
+    # Check if user has a company profile
+    if hasattr(user, 'company_profile'):
+        job_postings = JobPosting.objects.filter(company=user.company_profile).order_by('-posted_date')
     else:   
-        # All other users see all job postings
+        # Admin or other users see all job postings
         job_postings = JobPosting.objects.all().order_by('-posted_date')
 
     return render(request, 'job_posting/job_postings.html', {'job_postings': job_postings})
 
 @login_required
-@permission_required('jobRecruitment.view_candidate', raise_exception=True)
 def view_candidate_resume(request, id):
     candidate = get_object_or_404(Candidate, id=id)
     return render(request, 'candidate/view_resume.html', {'candidate': candidate})
