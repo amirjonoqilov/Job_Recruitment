@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -148,3 +149,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
+
+
+# Auto-create superuser on startup (for initial deployment)
+def create_superuser_on_startup():
+    from django.contrib.auth.models import User
+    
+    if not User.objects.filter(is_superuser=True).exists():
+        username = os.getenv('SUPERUSER_USERNAME', 'admin')
+        email = os.getenv('SUPERUSER_EMAIL', 'admin@example.com')
+        password = os.getenv('SUPERUSER_PASSWORD', 'Admin@123456')
+        
+        try:
+            User.objects.create_superuser(username, email, password)
+            print(f"✓ Superuser '{username}' created successfully")
+        except Exception as e:
+            print(f"Note: {e}")
+
+# Call on startup (if not in migration)
+if 'migrate' not in sys.argv and 'makemigrations' not in sys.argv:
+    try:
+        create_superuser_on_startup()
+    except:
+        pass
